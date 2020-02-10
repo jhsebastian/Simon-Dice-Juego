@@ -8,6 +8,7 @@ const btnEmpezar = document.getElementById('btnEmpezar')
     constructor() {
       this.inicializar()
       this.generarSecuencia()
+      this.siguienteNivel()
     }
 
     inicializar() {
@@ -23,6 +24,53 @@ const btnEmpezar = document.getElementById('btnEmpezar')
 
     generarSecuencia() {
       this.secuencia = new Array(10).fill(0).map(n => Math.floor(Math.random() * 4))
+    }
+
+    siguienteNivel() {
+      this.iluminarSecuencia()
+      this.agregarEventosClick()
+    }
+
+    transformarNumeroAColor(numero) {
+      switch (numero) {
+        case 0:
+          return 'celeste'
+        case 1: 
+          return 'violeta'
+        case 2:
+          return 'naranaja'
+        case 3:
+          return 'verde'
+      }
+    }
+
+    iluminarSecuencia() {
+      for (let i = 0; i < this.nivel ; i++) {
+        const color = this.transformarNumeroAColor(this.secuencia[i])
+        this.iluminarColor(color)
+        setTimeout(() => this.iluminarColor(color), 1000 * i)
+      }
+    }
+
+    iluminarColor(color) {
+      this.colores[color].classList.add('light')
+      setTimeout(() => this.apagarColor(color), 350)
+    }
+
+    apagarColor(color) {
+      this.colores[color].classList.remove('light')
+    }
+
+    agregarEventosClick() {
+      this.colores.celeste.addEventListener('click', this.elegiColor.bind(this))
+      this.colores.violeta.addEventListener('click', this.elegiColor)
+      this.colores.naranja.addEventListener('click', this.elegiColor)
+      this.colores.verde.addEventListener('click', this.elegiColor)
+
+    }
+
+    elegiColor(ev) {
+
     }
   }
 
